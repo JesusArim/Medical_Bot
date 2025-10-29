@@ -99,4 +99,35 @@ def generate_json_file(data, filename):
 generate_json_file(medical_data, 'data/medic_data.json')
 
 
+nlp = spacy.load("en_core_web_sm")
+
+def print_json_from_file(path_filename):
+    """
+      Prints the contents of a JSON file to the console
+    """
+    try:
+        with open(path_filename, mode='r') as file:
+            data = json.load(file) ## Load JSON data
+            print(json.dumps(data, indent=4)) ## Print with indentation
+    except FileNotFoundError:
+        print(f'Error: File {path_filename} not found.')
+    except json.JSONDecodeError:
+        print(f'Error: Ivalid JSON format in {path_filename}')
+    except Exception as e:
+        print(f'Error: {e}')
+
+def extract_symptoms(user_input):
+    """Extract symptoms from user imput usring spacyC."""
+    tks_med = nlp(user_input)
+    symptoms = []
+    for token in tks_med:
+        token_txt = token.text.lower()
+        if token_txt in medical_data['symptoms'] and token_txt not in symptoms:
+            symptoms.append(token_txt)
+    return symptoms
+
+
+
+
+
 
