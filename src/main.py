@@ -126,6 +126,31 @@ def extract_symptoms(user_input):
             symptoms.append(token_txt)
     return symptoms
 
+#Example
+"""
+   user_input = "I have a headache and a fever"
+   user_symptoms = extract_symptoms(user_input)
+   print(user_symptoms)
+   -> ['headache', 'fever']
+"""
+
+def analyze_symptoms(extracted_symptoms):
+    """Analyzes symptoms and returns the possible conditions with counts"""
+    possible_conditions = {}
+    if extract_symptoms:
+        for symptom in extract_symptoms:
+            list_conditions = medical_data['symptoms'][symptom]
+            for condition in list_conditions:
+                if condition not in possible_conditions:
+                    possible_conditions[condition] = 1
+                else:
+                    possible_conditions[condition] += 1
+    else:
+        return None
+    return possible_conditions
+
+
+
 
 
 
