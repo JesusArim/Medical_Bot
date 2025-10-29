@@ -150,7 +150,44 @@ def analyze_symptoms(extracted_symptoms):
     return possible_conditions
 
 
+"""
+extracted_symptoms = ['headache', 'fever']
+possible_conditions = analyze_symptoms(extracted_symptoms)
+print(possible_conditions)
+"""
 
+##Generate responses 
+
+
+def generate_response(extracted_symptoms, possible_conditions):
+    """ """
+    response = ""
+    if extract_symptoms:
+        response += "I understand you have " + ", ".join(extract_symptoms) + "."
+        response += "\nBased on your symptoms, the most likely possibilities are:"
+
+        if possible_conditions:
+            sorted_conditions = sorted(possible_conditions.items(), key=lambda item: item[1], reverse=True)
+            for condition, frecuency in sorted_conditions:
+                recommendation = medical_data['recommendations'][condition]
+                response += f'- {condition} ({frecuency} matching symptom(s))\n * {recommendation}'
+        else:
+            response += "\nI'm sorry, I don't recognize any symptoms in your description."
+        response += "Remember, I am just a chatbot and cannot provide medical advice. Please consult a doctor for proper diagnosis an treatment."
+        return response
+    
+
+"""
+# Checking your Results
+extracted_symptoms = ["headache", "fever"]
+possible_conditions = {
+    "common cold": 2,
+    "flu": 2,
+    "migraine": 1
+}
+print(generate_response(extracted_symptoms, possible_conditions))
+# Test for header
+"""
 
 
 
